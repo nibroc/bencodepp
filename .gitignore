@@ -11,3 +11,9 @@
 *.lai
 *.la
 *.a
+
+# Executables
+bencode_test
+
+# Meta files generated in the build process
+.depend
