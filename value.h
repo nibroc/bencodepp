@@ -1,7 +1,7 @@
-#ifndef TORRENTPP_BENCODE_VALUE_H
-#define	TORRENTPP_BENCODE_VALUE_H
+#ifndef TORRENTPP_value_H
+#define	TORRENTPP_value_H
 
-#include "bencode.h"
+#include "encode.h"
 
 #include <cstdint>
 #include <map>
@@ -10,32 +10,34 @@
 #include <string>
 #include <vector>
 
-class bencode_value {
+namespace bencode {
+
+class value {
 public:
 	enum class type { null, integer, string, list, dict };
 	
 	typedef std::int64_t int_type;
 	typedef std::string string_type;
-	typedef std::vector<bencode_value> list_type;
-	typedef std::map<bencode_value, bencode_value> dict_type;
+	typedef std::vector<value> list_type;
+	typedef std::map<value, value> dict_type;
 	
-	bencode_value()
+	value()
 	  : type_(type::null), int_(), string_(), list_(), dict_()
 	{ }
 	
-	explicit bencode_value(std::int64_t v) 
+	explicit value(std::int64_t v) 
 	  : type_(type::integer), int_(v), string_(), list_(), dict_()
 	{ }
 	
-	explicit bencode_value(const std::string& str) 
+	explicit value(const std::string& str) 
 	  : type_(type::string), int_(), string_(str), list_(), dict_()
 	{ }
 	
-	explicit bencode_value(const list_type& list) 
+	explicit value(const list_type& list) 
 	  : type_(type::list), int_(), string_(), list_(list), dict_()
 	{ }
 	
-	explicit bencode_value(const dict_type& dict)
+	explicit value(const dict_type& dict)
 	  : type_(type::dict), int_(), string_(), list_(), dict_(dict)
 	{ }
 	
@@ -45,27 +47,27 @@ public:
 	list_type list_value() const { return list_; }
 	dict_type dict_value() const { return dict_; }
 	
-	std::string bencode() const
+	std::string encode() const
 	{
 		switch (type_) {
 			case type::integer:
-				return ::bencode(int_);
+				return bencode::encode(int_);
 			case type::string:
-				return ::bencode(string_);
+				return bencode::encode(string_);
 			case type::list:
-				return ::bencode(list_);
+				return bencode::encode(list_);
 			case type::dict:
-				return ::bencode(dict_);
+				return bencode::encode(dict_);
 			case type::null:
 				throw std::runtime_error("Cannot dereference null bencode values");
 			default:
-				throw std::runtime_error("Unknown bencode_value type");
+				throw std::runtime_error("Unknown value type");
 		}
 	}
 	
-	bool operator<(const bencode_value& other) const
+	bool operator<(const value& other) const
 	{
-		return bencode() < other.bencode();
+		return encode() < other.encode();
 	}
 	
 	std::string to_string() const
@@ -82,16 +84,16 @@ public:
 			case type::null:
 				throw std::runtime_error("Cannot dereference null bencode values");
 			default:
-				throw std::runtime_error("Unknown bencode_value type");
+				throw std::runtime_error("Unknown value type");
 		}
 	}
 	
-	bool operator==(const bencode_value& other)
+	bool operator==(const value& other)
 	{
 		if (type_ != other.type_) {
 			return false;
 		}
-		return bencode() == other.bencode();
+		return encode() == other.encode();
 	}
 	
 private:
@@ -132,5 +134,7 @@ private:
 	}
 	
 };
+
+}
 
 #endif

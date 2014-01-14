@@ -1,5 +1,5 @@
-#ifndef TORRENTPP_BENCODE_H
-#define TORRENTPP_BENCODE_H
+#ifndef BENCODE_ENCODE_H
+#define BENCODE_ENCODE_H
 
 /*
  * bencoding is specified as follows:
@@ -24,16 +24,20 @@
 #include <string>
 #include <vector>
 
-class bencode_value;
+namespace bencode {
 
-std::string bencode(const std::string& str);
+	class value;
 
-std::string bencode(std::int64_t i);
+	std::string encode(const std::string& str);
 
-std::string bencode(const std::vector<bencode_value>& list);
+	std::string encode(std::int64_t i);
 
-std::string bencode(const std::map<bencode_value, bencode_value>& dict);
+	std::string encode(const std::vector<value>& list);
 
-std::string bencode(const bencode_value& val);
+	std::string encode(const std::map<value, value>& dict);
+
+	std::string encode(const value& val);
+
+}
 
 #endif
