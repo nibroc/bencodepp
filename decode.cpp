@@ -5,6 +5,8 @@
 #include <string>
 #include <stdexcept>
 
+#include <iostream>
+
 using namespace bencode;
 
 template <typename Iter>
@@ -27,14 +29,26 @@ static value parse_string(Iter& beg, const Iter& end)
 		throw std::runtime_error("Invalid string format");
 	}
 	
+	std::cout << std::string(beg, it) << std::endl;
+	
+	
 	std::size_t idx = 0;
-	int len = std::stoi(std::string(beg, it), &idx);
+	const int len = std::stoi(std::string(beg, it), &idx);
 	
 	if (static_cast<int>(idx) != it - beg) {
-		throw std::runtime_error("");
+		throw std::runtime_error("Failed to parse string length prefix");
 	}
 	
+	// Om nom nom -- eat the semicolon
 	++it;
+	
+	// All that remains now is the actual string.
+	// This means that we should have end - it >= len
+	
+	if (end - it < len) {
+		throw std::runtime_error("String length and content do not match");
+	}
+
 	beg = it + len;
 	return value(std::string(it, beg));
 }
