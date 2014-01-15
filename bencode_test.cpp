@@ -4,13 +4,14 @@
 
 #include "utestpp/utestpp.h"
 
-#include <fstream>
 #include <iterator>
 #include <iostream>
 #include <stdexcept>
 #include <string>
 
-using namespace bencode;
+using bencode::encode;
+using bencode::decode;
+using bencode::value;
 
 void test_int()
 {
@@ -83,7 +84,7 @@ void test_dict()
 }
 
 int main()
-{
+{	
 	UTESTPP_INIT();
 	test_int();
 	test_string();
