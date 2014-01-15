@@ -17,3 +17,6 @@ bencode_test
 
 # Meta files generated in the build process
 .depend
+
+# IDE workspaces
+nbproject
