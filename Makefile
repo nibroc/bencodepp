@@ -20,6 +20,7 @@ debug: build
 
 build: depend $(OBJS)
 	ar rvs $(LIBRARY) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o bencode_test bencode_test.cpp $(LIBRARY) $(LDFLAGS) $(LDLIBS)
 
 depend: .depend
 
@@ -29,10 +30,7 @@ depend: .depend
 clean:
 	$(RM) $(RMFLAGS) $(OBJS) .depend bencode_test $(LIBRARY)
 
-build_tests: build
-	$(CXX) $(CXXFLAGS) -o bencode_test bencode_test.cpp $(LIBRARY) $(LDFLAGS) $(LDLIBS)
-
-tests: build_tests
+tests: build
 	./bencode_test
 
 -include $(DEPS)
