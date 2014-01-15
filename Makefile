@@ -6,7 +6,7 @@ LDLIBS+=
 
 CXX=clang++
 
-SRCS=encode.cpp decode.cpp
+SRCS=encode.cpp decode.cpp value.cpp
 OBJS=$(patsubst %.cpp, %.o, $(SRCS))
 DEPS=.depend
 LIBRARY=bencode.a
