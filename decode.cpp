@@ -5,8 +5,6 @@
 #include <string>
 #include <stdexcept>
 
-#include <iostream>
-
 using namespace bencode;
 
 template <typename Iter>
@@ -28,9 +26,6 @@ static value parse_string(Iter& beg, const Iter& end)
 	if (it == end) {
 		throw std::runtime_error("Invalid string format");
 	}
-	
-	std::cout << std::string(beg, it) << std::endl;
-	
 	
 	std::size_t idx = 0;
 	const int len = std::stoi(std::string(beg, it), &idx);
