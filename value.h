@@ -1,5 +1,5 @@
-#ifndef TORRENTPP_value_H
-#define	TORRENTPP_value_H
+#ifndef BENCODE_VALUE_H
+#define	BENCODE_VALUE_H
 
 #include "encode.h"
 
