@@ -121,7 +121,9 @@ static value parse_dict(Iter& beg, const Iter& end)
 	
 	value::dict_type dict;
 	while (beg != end && *beg != 'e') {
-		dict[decode(beg, end)] = decode(beg, end);
+		value first = decode(beg, end);
+		value second = decode(beg, end);
+		dict[first] = second;
 	}
 	if (beg == end || *beg != 'e') {
 		throw std::runtime_error("Dicts must be suffixed by e");
